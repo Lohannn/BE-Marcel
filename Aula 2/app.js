@@ -1,0 +1,70 @@
+/********************************************************************************************************************
+ * Objetivo: Calcular a média de 4 notas escolares. 
+ * Autor: Lohannes da Silva Costa
+ * Data: 27/01/2023
+ * Versão: 1.0.1.27.23
+ ********************************************************************************************************************/
+
+//Import da Biblioteca ReadLine.
+var readLine = require('readline');
+
+//Cria o objeto para usar o  especialista em entrada de dados pelo teclado.
+var entradaDados = readLine.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+/*
+*   Criação de variáveis
+    * var - Cria um espaço em memória de escopo global para o projeto, ou seja,
+        * essa variável poderá ser utilizada em qualquer parte do arquivo (várias funções). 
+        * 
+    * let - Cria um espaço em memória de escopo local para o projeto, ou seja,
+        * essa variável só poderá ser utilizada dentro da função que foi criada.
+        * 
+    * const - Cria um espaço em memória de escopo local ou global para o projeto, ou seja,
+        * essa constante poderá ser utilizada em qualquer parte do projeto e nunca sofrerá alteração.
+*
+*
+*/
+
+//Função de Callback para entrar o nome do aluno
+entradaDados.question('Digite seu nome: \n', function (nome) {
+    //Recebe o valor digitado pelo teclado.  
+    let nomeAluno = nome;
+
+    //Função de Callback para entrar a primeira nota.
+    entradaDados.question('Digite a primeira nota: \n', function (nota1) {
+        let primeiraNota = nota1;
+
+        //Função de Callback para entrar a segunda nota.
+        entradaDados.question('Digite a segunda nota: \n', function (nota2) {
+            let segundaNota = nota2;
+
+            //Função de Callback para entrar a terceira nota.
+            entradaDados.question('Digite a terceira nota: \n', function (nota3) {
+                let terceiraNota = nota3;
+
+                //Função de Callback para entrar a quarta nota.
+                entradaDados.question('Digite a terceira nota: \n', function (nota4) {
+                    let quartaNota = nota4;
+                    let media = (parseFloat(primeiraNota) + parseFloat(segundaNota) + parseFloat(terceiraNota) + parseFloat(quartaNota)) / 4;
+
+                    console.log('Nome do Aluno: ' + nome + '\nPortuguês: ' + nota1 + '\nMatemática: '
+                    + nota2 + '\nInglês: ' + nota3 + '\nEd. Física: ' + nota4 + '\n-------------' + '\nMédia Final: ' + media);
+                    
+                    if (media < 5){
+                        console.log('\nAluno Reprovado');
+                    } else {
+                        console.log('\nAluno Aprovado');
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+
+});

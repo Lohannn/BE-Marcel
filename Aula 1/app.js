@@ -10,7 +10,6 @@ console.log('Testando o Node.JS');
 
 //Import da biblioteca que permite a entrada de dados via teclado.
 var readLine = require('readline');
-const { NOMEM } = require('dns');
 
 //Criamos um objeto ou variável que vai ser especialista na entrada de dados via teclado.
 var entradaDados = readLine.createInterface({
