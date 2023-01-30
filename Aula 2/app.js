@@ -1,8 +1,8 @@
 /********************************************************************************************************************
  * Objetivo: Calcular a média de 4 notas escolares. 
  * Autor: Lohannes da Silva Costa
- * Data: 27/01/2023
- * Versão: 1.1.1.27.23
+ * Data: 30/01/2023
+ * Versão: 1.2.1.30.23
  ********************************************************************************************************************/
 
 //Import da Biblioteca ReadLine.
@@ -50,25 +50,25 @@ entradaDados.question('Digite seu nome: \n', function (nome) {
                 entradaDados.question('Digite a terceira nota: \n', function (nota4) {
                     let quartaNota = nota4;
 
-                    if ((primeiraNota || segundaNota || terceiraNota || quartaNota == '')) {
-                        console.log('\nERRO: Algum dado não foi fornecido'); 
+                    if ((primeiraNota === '' || segundaNota === '' || terceiraNota === '' || quartaNota === '')) {
+                        console.log('\nERRO: Algum dado não foi fornecido');
                     } else if (isNaN(primeiraNota) || isNaN(segundaNota) || isNaN(terceiraNota) || isNaN(quartaNota)) {
-                        console.log('\nERRO: Alguma das notas não é um Número'); 
-                    } else if (((primeiraNota || segundaNota || terceiraNota || quartaNota) > 10)){
-                        console.log('\nERRO: Alguma das notas ultrapassou o limite');
+                        console.log('\nERRO: Alguma das notas não é um Número');
+                    } else if (primeiraNota > 10 || segundaNota > 10 || terceiraNota > 10 || quartaNota > 10 ||
+                        primeiraNota < 0 || segundaNota < 0 || terceiraNota < 0 || quartaNota < 0) {
+                        console.log('\nERRO: Alguma das notas ultrapassou o limite')
                     } else {
                         let media = (parseFloat(primeiraNota) + parseFloat(segundaNota) + parseFloat(terceiraNota) + parseFloat(quartaNota)) / 4;
 
                         console.log('Nome do Aluno: ' + nome + '\nPortuguês: ' + nota1 + '\nMatemática: '
-                        + nota2 + '\nInglês: ' + nota3 + '\nEd. Física: ' + nota4 + '\n-------------' + '\nMédia Final: ' + media);
-                    
-                        if (media < 5){
+                            + nota2 + '\nInglês: ' + nota3 + '\nEd. Física: ' + nota4 + '\n-------------' + '\nMédia Final: ' + media.toFixed(1));
+
+                        if (media < 7) {
                             console.log('\nAluno Reprovado');
                         } else {
                             console.log('\nAluno Aprovado');
                         }
                     }
-                    
 
                 });
 
