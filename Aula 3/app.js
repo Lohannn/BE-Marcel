@@ -7,7 +7,6 @@
 
 //Import da Biblioteca ReadLine.
 var readLine = require('readline');
-const { isNull } = require('util');
 
 //Cria o objeto para usar o  especialista em entrada de dados pelo teclado.
 var entradaDados = readLine.createInterface({
