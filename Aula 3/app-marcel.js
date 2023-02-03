@@ -30,24 +30,31 @@ entradaDados.question('Valor: \n', function (numero1) {
 
             if (valor1 == '' || valor2 == '' | operacao == '') {
                 console.log('ERRO: Não é possível calcular se algum dado estiver em branco.');
+                entradaDados.close();
 
                 // }else if (typeof(valor1) != 'number')
                 //     typeof() - identifica o tipo de dados de um elemento.
                 //     isNaN() - Identifica se é um número ou não.
             } else if (isNaN(valor1) || isNaN(valor2)) {
                 console.log('ERRO: Não é possível calcular valores que não forem números.');
+                entradaDados.close();
             } else {
                 if (operacao == 'SOMAR') {
                     resultado = Number(valor1) + Number(valor2);
+                    entradaDados.close();
                 } else if (operacao == 'SUBTRAIR') {
                     resultado = Number(valor1) - Number(valor2);
+                    entradaDados.close();
                 } else if (operacao == 'MULTIPLICAR') {
                     resultado = Number(valor1) * Number(valor2);
+                    entradaDados.close();
                 } else if (operacao == 'DIVIDIR') {
                     if (valor2 == 0) {
                         console.log('ERRO: Não é possível realizar a divisão');
+                        entradaDados.close();
                     } else {
                         resultado = Number(valor1) / Number(valor2);
+                        entradaDados.close();
                     }
                 } else {
                     console.log('ERRO: Não é um tipo de cálculo válido.');
@@ -55,6 +62,7 @@ entradaDados.question('Valor: \n', function (numero1) {
 
                 if (resultado == undefined) {
                     console.log('ERRO: Não foi possível encontrar um valor válido.');
+                    entradaDados.close();
                 } else {
                     console.log(resultado.toFixed(2));
                 }
