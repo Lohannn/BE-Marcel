@@ -7,6 +7,7 @@
 
 var readline = require('readline');
 const { type } = require('os');
+var matematica = require('./modulo/calculadora.js');
 
 var entradaDados = readline.createInterface({
     input: process.stdin,
@@ -39,36 +40,17 @@ entradaDados.question('Valor: \n', function (numero1) {
                 console.log('ERRO: Não é possível calcular valores que não forem números.');
                 entradaDados.close();
             } else {
-                if (operacao == 'SOMAR') {
-                    resultado = Number(valor1) + Number(valor2);
+
+                resultado = matematica.calculadora(valor1, valor2, operacao)
+                if (resultado != false) {
+                    console.log(resultado);
                     entradaDados.close();
-                } else if (operacao == 'SUBTRAIR') {
-                    resultado = Number(valor1) - Number(valor2);
-                    entradaDados.close();
-                } else if (operacao == 'MULTIPLICAR') {
-                    resultado = Number(valor1) * Number(valor2);
-                    entradaDados.close();
-                } else if (operacao == 'DIVIDIR') {
-                    if (valor2 == 0) {
-                        console.log('ERRO: Não é possível realizar a divisão');
-                        entradaDados.close();
-                    } else {
-                        resultado = Number(valor1) / Number(valor2);
-                        entradaDados.close();
-                    }
                 } else {
-                    console.log('ERRO: Não é um tipo de cálculo válido.');
+                    entradaDados.close();
                 }
 
-                if (resultado == undefined) {
-                    console.log('ERRO: Não foi possível encontrar um valor válido.');
-                    entradaDados.close();
-                } else {
-                    console.log(resultado.toFixed(2));
-                }
 
             }
-
         });
 
     });
