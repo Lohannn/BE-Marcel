@@ -42,14 +42,12 @@ entradaDados.question('Valor: \n', function (numero1) {
             } else {
 
                 resultado = matematica.calculadora(valor1, valor2, operacao)
-                if (resultado != false) {
-                    console.log(resultado);
+                if (resultado === false) {
                     entradaDados.close();
                 } else {
+                    console.log(resultado);
                     entradaDados.close();
                 }
-
-
             }
         });
 
