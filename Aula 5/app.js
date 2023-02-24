@@ -101,21 +101,25 @@ const removerProduto = function(nomeProduto){
 
 }
 
-const removerProdutoCopia = function(lista, nomeProduto){
-    let nome = nomeProduto;
-    let produtos = lista.slice();
-    let indice = produtos.indexOf(nome);
+const removerElementoCopia = function(lista, nomeItem){
+    //Entrada
+    let nome = nomeItem;
+    let novaLista = lista.slice();
+    let indice = novaLista.indexOf(nome);
     let resultado;
     
+    //Processamento
     if(indice >= 0){
-        produtos.splice(indice, 1);
-        resultado = produtos
+        novaLista.splice(indice, 1);
+        resultado = novaLista
     } else {
         resultado = false;
     }
+
+    //Saída
     return resultado
 }
 
 //manipulandoDados();
-console.table(removerProdutoCopia(listaProdutos,'HD'));
+console.table(removerElementoCopia(listaProdutos,'HD'));
 console.table(listaProdutos)
