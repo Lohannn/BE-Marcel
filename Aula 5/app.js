@@ -8,7 +8,7 @@
 // { } - Representa um objeto do tipo 
 
 const listaNomes = ['Amanda', 'Bernardo', true, 'Débora', 'Eleanor', 5]
-const listaProdutos = ['Mouse', 'Teclado', 'Monitor']
+const listaProdutos = ['Mouse', 'Teclado', 'Monitor', 'Gabinete', 'HD', 'Memória']
 
 const percorrerArrays = function () {
     //Verifica o tipo de dado do elemento listaNomes.
@@ -83,4 +83,39 @@ const manipulandoDados = function(){
     }
 }
 
-manipulandoDados()
+const removerProduto = function(nomeProduto){
+    let nome = nomeProduto;
+    let indice = listaProdutos.indexOf(nome);
+    let status;
+
+    //splice - Permite apagar um ou mais itens de um array através do index. Caso o segundo parâmetro não 
+    //seja definido, irá apagar todos os elementos a partir daquele índice.
+    if(indice >= 0){
+        listaProdutos.splice(indice, 1);
+        status = true;
+    } else {
+        status = false;
+    }
+
+    return status
+
+}
+
+const removerProdutoCopia = function(lista, nomeProduto){
+    let nome = nomeProduto;
+    let produtos = lista.slice();
+    let indice = produtos.indexOf(nome);
+    let resultado;
+    
+    if(indice >= 0){
+        produtos.splice(indice, 1);
+        resultado = produtos
+    } else {
+        resultado = false;
+    }
+    return resultado
+}
+
+//manipulandoDados();
+console.table(removerProdutoCopia(listaProdutos,'HD'));
+console.table(listaProdutos)
