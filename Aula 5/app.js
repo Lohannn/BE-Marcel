@@ -251,12 +251,19 @@ const listagemProdutos = function () {
         console.log(`Nome: ${listProdutosJSON.produtos[contador].nome}`);
         console.log(`Marca: ${listProdutosJSON.produtos[contador].marca}`);
         console.log(`Valor: ${listProdutosJSON.produtos[contador].valor}`);
-        console.log(`Cor: ${listProdutosJSON.produtos[contador].cores}`);
         
-        if(listProdutosJSON.produtos[contador].indexOf(listProdutosJSON.produtos[contador].modelos) >= 0){
-            for(let variante = 0; variante < listProdutosJSON.produtos[contador].modelos.length; variante++){
-                console.log(`Modelo: ${listProdutosJSON.produtos[contador].modelos[variante]}`);
+        console.log(`Cores: `);
+            for (let variante = 0; variante < listProdutosJSON.produtos[contador].cores.length; variante++) {
+                console.log(` - ${listProdutosJSON.produtos[contador].cores[variante]}`);
+            }
+
+        if (listProdutosJSON.produtos[contador].nome !== 'Mouse') {
+            console.log(`Modelos: `);
+            for (let variante = 0; variante < listProdutosJSON.produtos[contador].modelos.length; variante++) {
+                console.log(` - ${listProdutosJSON.produtos[contador].modelos[variante]}`);
+            }
         }
+
     }
 
     // for(let contador = 0;contador < listProdutosArray.length;contador++){
@@ -264,6 +271,6 @@ const listagemProdutos = function () {
     // }
 
     // console.log(listProdutosJSON)
-}}
+}
 
 listagemProdutos()
