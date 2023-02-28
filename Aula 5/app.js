@@ -220,26 +220,30 @@ const listagemProdutos = function () {
     listProdutosJSON.produtos = listProdutosArray;
 
     //Adcionar cores ao monitor 
-    listProdutosJSON.produtos[0].cores = listCoresDellArray
-    listProdutosJSON.produtos[1].cores = listCoresLgArray
-    listProdutosJSON.produtos[2].cores = listCoresDellArray
-    listProdutosJSON.produtos[3].cores = listCoresTecladoArray
-    listProdutosJSON.produtos[4].cores = listCoresTecladoArray
-    listProdutosJSON.produtos[5].cores = listCoresTecladoArray
-    listProdutosJSON.produtos[6].cores = listCoresDellArray
-    listProdutosJSON.produtos[7].cores = listCoresMouseArray
+    for(let i=0; i<listProdutosJSON.produtos.length; i++) {
+        if(listProdutosJSON.produtos[i].marca === 'Dell') {
+            listProdutosJSON.produtos[i].cores = listCoresDellArray;
+        } else if(listProdutosJSON.produtos[i].marca === 'LG') {
+            listProdutosJSON.produtos[i].cores = listCoresLgArray;
+        } else if(listProdutosJSON.produtos[i].nome === 'Teclado') {
+            listProdutosJSON.produtos[i].cores = listCoresTecladoArray;
+        } else if(listProdutosJSON.produtos[i].nome === 'Mouse') {
+            listProdutosJSON.produtos[i].cores = listCoresMouseArray;
+        }
+    }
 
     //Arrays para modelos
     let listModelosMonitor = ['LCD', 'LED', 'OLED', '4k', 'IPS']
     let listModelosTeclado = ['Mecânico', 'Semi-Mecânico', 'Membrana', 'Óptico', 'Wireless']
 
     //Adcionar modelos aos monitores e teclados
-    listProdutosJSON.produtos[0].modelos = listModelosMonitor
-    listProdutosJSON.produtos[1].modelos = listModelosMonitor
-    listProdutosJSON.produtos[2].modelos = listModelosTeclado
-    listProdutosJSON.produtos[3].modelos = listModelosTeclado
-    listProdutosJSON.produtos[4].modelos = listModelosTeclado
-    listProdutosJSON.produtos[5].modelos = listModelosTeclado
+    for(let i=0; i<listProdutosJSON.produtos.length; i++) {
+        if(listProdutosJSON.produtos[i].nome === 'Monitor') {
+            listProdutosJSON.produtos[i].modelos = listCoresDellArray;
+        } else if(listProdutosJSON.produtos[i].nome === 'Teclado') {
+            listProdutosJSON.produtos[i].modelos = listCoresLgArray;
+        }
+    }
 
     // console.log(`Nome: ${listProdutosJSON.produtos[1].nome}`);
     // console.log(`Marca: ${listProdutosJSON.produtos[1].marca}`);
