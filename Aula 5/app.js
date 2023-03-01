@@ -220,14 +220,14 @@ const listagemProdutos = function () {
     listProdutosJSON.produtos = listProdutosArray;
 
     //Adcionar cores ao monitor 
-    for(let i=0; i<listProdutosJSON.produtos.length; i++) {
-        if(listProdutosJSON.produtos[i].marca === 'Dell') {
+    for (let i = 0; i < listProdutosJSON.produtos.length; i++) {
+        if (listProdutosJSON.produtos[i].marca === 'Dell') {
             listProdutosJSON.produtos[i].cores = listCoresDellArray;
-        } else if(listProdutosJSON.produtos[i].marca === 'LG') {
+        } else if (listProdutosJSON.produtos[i].marca === 'LG') {
             listProdutosJSON.produtos[i].cores = listCoresLgArray;
-        } else if(listProdutosJSON.produtos[i].nome === 'Teclado') {
+        } else if (listProdutosJSON.produtos[i].nome === 'Teclado') {
             listProdutosJSON.produtos[i].cores = listCoresTecladoArray;
-        } else if(listProdutosJSON.produtos[i].nome === 'Mouse') {
+        } else if (listProdutosJSON.produtos[i].nome === 'Mouse') {
             listProdutosJSON.produtos[i].cores = listCoresMouseArray;
         }
     }
@@ -237,11 +237,11 @@ const listagemProdutos = function () {
     let listModelosTeclado = ['Mecânico', 'Semi-Mecânico', 'Membrana', 'Óptico', 'Wireless']
 
     //Adcionar modelos aos monitores e teclados
-    for(let i=0; i<listProdutosJSON.produtos.length; i++) {
-        if(listProdutosJSON.produtos[i].nome === 'Monitor') {
-            listProdutosJSON.produtos[i].modelos = listCoresDellArray;
-        } else if(listProdutosJSON.produtos[i].nome === 'Teclado') {
-            listProdutosJSON.produtos[i].modelos = listCoresLgArray;
+    for (let i = 0; i < listProdutosJSON.produtos.length; i++) {
+        if (listProdutosJSON.produtos[i].nome === 'Monitor') {
+            listProdutosJSON.produtos[i].modelos = listModelosMonitor;
+        } else if (listProdutosJSON.produtos[i].nome === 'Teclado') {
+            listProdutosJSON.produtos[i].modelos = listModelosMonitor;
         }
     }
 
@@ -255,13 +255,13 @@ const listagemProdutos = function () {
         console.log(`Nome: ${listProdutosJSON.produtos[contador].nome}`);
         console.log(`Marca: ${listProdutosJSON.produtos[contador].marca}`);
         console.log(`Valor: ${listProdutosJSON.produtos[contador].valor}`);
-        
-        console.log(`Cores: `);
-            for (let variante = 0; variante < listProdutosJSON.produtos[contador].cores.length; variante++) {
-                console.log(` - ${listProdutosJSON.produtos[contador].cores[variante]}`);
-            }
 
-        if (listProdutosJSON.produtos[contador].nome !== 'Mouse') {
+        console.log(`Cores: `);
+        for (let variante = 0; variante < listProdutosJSON.produtos[contador].cores.length; variante++) {
+            console.log(` - ${listProdutosJSON.produtos[contador].cores[variante]}`);
+        }
+
+        if (listProdutosJSON.produtos[contador]["modelos"] !== undefined) {
             console.log(`Modelos: `);
             for (let variante = 0; variante < listProdutosJSON.produtos[contador].modelos.length; variante++) {
                 console.log(` - ${listProdutosJSON.produtos[contador].modelos[variante]}`);
