@@ -250,25 +250,25 @@ const listagemProdutos = function () {
     // console.log(`Valor: ${listProdutosJSON.produtos[1].valor}`);
     // console.log(`Cor: ${listProdutosJSON.produtos[1].cores[1]}`);
 
-    for (let contador = 0; contador < listProdutosJSON.produtos.length; contador++) {
-        console.log('\n')
-        console.log(`Nome: ${listProdutosJSON.produtos[contador].nome}`);
-        console.log(`Marca: ${listProdutosJSON.produtos[contador].marca}`);
-        console.log(`Valor: ${listProdutosJSON.produtos[contador].valor}`);
-
-        console.log(`Cores: `);
-        for (let variante = 0; variante < listProdutosJSON.produtos[contador].cores.length; variante++) {
-            console.log(` - ${listProdutosJSON.produtos[contador].cores[variante]}`);
-        }
-
-        if (listProdutosJSON.produtos[contador]["modelos"] !== undefined) {
-            console.log(`Modelos: `);
-            for (let variante = 0; variante < listProdutosJSON.produtos[contador].modelos.length; variante++) {
-                console.log(` - ${listProdutosJSON.produtos[contador].modelos[variante]}`);
+    listProdutosJSON.produtos.forEach(function(lista){
+            console.log(`Nome: ${lista.nome}`);
+            console.log(`Marca: ${lista.marca}`);
+            console.log(`Valor: R$ ${lista.valor}.00`);
+    
+            console.log(`Cores: `);
+            lista.cores.forEach(function(cor){
+                console.log(` - ${cor}`);
+            })
+    
+            if (lista.modelos !== undefined) {
+                console.log(`Modelos: `);
+                lista.modelos.forEach(function(modelo){
+                    console.log(` - ${modelo}`);
+                })
             }
-        }
-
-    }
+            console.log('--------------------------------------------------')
+    
+    })
 
     // for(let contador = 0;contador < listProdutosArray.length;contador++){
     //     console.log(listProdutosJSON.produtos[contador])
