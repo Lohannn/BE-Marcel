@@ -76,33 +76,17 @@ const getCapitalEstado = function (siglaDoEstado) {
 
 const getEstadosRegiao = function (regiaoDoBrasil) {
 
-    let regiao = regiaoDoBrasil
-
-    if (regiao.toUpperCase() == 'CENTRO-OESTE') {
-        let primeiraLetra = regiaoDoBrasil.charAt(0).toUpperCase();
-        let restoDaPalavra = regiaoDoBrasil.slice(1, 7).toLowerCase();
-        let segundaLetra = regiaoDoBrasil.slice(7, 8).toUpperCase();
-        let outroRestoDaPalavra = regiaoDoBrasil.slice(8).toLowerCase();
-
-        regiao = primeiraLetra + restoDaPalavra + segundaLetra + outroRestoDaPalavra
-    } else {
-        let primeiraLetra = regiaoDoBrasil.charAt(0).toUpperCase();
-        let restoDaPalavra = regiaoDoBrasil.slice(1).toLowerCase();
-        regiao = primeiraLetra + restoDaPalavra;
-    }
-
+    let regiao = regiaoDoBrasil.toUpperCase()
     let listaRegiaoJSON;
     let listaEstadosArray = []
 
-
     estadosBrasil.estadosCidades.estados.forEach(function (estado) {
-        if (estado.regiao == regiao) {
+        if (estado.regiao.toUpperCase() == regiao) {
             let estadoRecolhido = {}
 
             estadoRecolhido.uf = estado.sigla
             estadoRecolhido.descricao = estado.nome
             listaEstadosArray.push(estadoRecolhido)
-
         }
     })
 
@@ -115,11 +99,11 @@ const getEstadosRegiao = function (regiaoDoBrasil) {
         listaRegiaoJSON = false;
     }
 
-
-
     return listaRegiaoJSON;
 
 }
+
+console.log(getEstadosRegiao('centro-Oeste'))
 
 const getCapitalPais = function () {
 
