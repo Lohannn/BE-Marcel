@@ -20,7 +20,12 @@ const getListaDeEstados = function () {
     listaEstadosJSON.uf = listaEstadosArray;
     listaEstadosJSON.quantidade = listaEstadosArray.length;
 
-    return listaEstadosJSON
+    if (listaEstadosJSON.length <= 0) {
+        listaEstadosJSON = false;
+    } else {
+        return listaEstadosJSON
+    }
+
 
 }
 
@@ -29,24 +34,19 @@ const getDadosEstado = function (siglaDoEstado) {
     let siglaEstado = siglaDoEstado.toUpperCase();
     let listaDadosJSON = false;
 
-    if (regiao === '') {
-        listaRegiaoJSON = false;
-    } else if (!isNaN(regiao)) {
-        listaRegiaoJSON = false;
-    } else {
-        estadosBrasil.estadosCidades.estados.forEach(function (estado) {
-            if (estado.sigla == siglaEstado) {
-                listaDadosJSON = {};
+    estadosBrasil.estadosCidades.estados.forEach(function (estado) {
+        if (estado.sigla == siglaEstado) {
+            listaDadosJSON = {};
 
-                listaDadosJSON.uf = estado.sigla;
-                listaDadosJSON.descricao = estado.nome;
-                listaDadosJSON.capital = estado.capital;
-                listaDadosJSON.regiao = estado.regiao;
+            listaDadosJSON.uf = estado.sigla;
+            listaDadosJSON.descricao = estado.nome;
+            listaDadosJSON.capital = estado.capital;
+            listaDadosJSON.regiao = estado.regiao;
 
-            }
+        }
 
-        })
-    }
+    })
+
 
     return listaDadosJSON;
 
@@ -57,22 +57,18 @@ const getCapitalEstado = function (siglaDoEstado) {
     let siglaEstado = siglaDoEstado.toUpperCase();
     let listaCapitalJSON = false;
 
-    if (regiao === '') {
-        listaRegiaoJSON = false;
-    } else if (!isNaN(regiao)) {
-        listaRegiaoJSON = false;
-    } else {
-        estadosBrasil.estadosCidades.estados.forEach(function (estado) {
-            if (estado.sigla == siglaEstado) {
-                listaCapitalJSON = {};
 
-                listaCapitalJSON.uf = estado.sigla;
-                listaCapitalJSON.descricao = estado.nome;
-                listaCapitalJSON.capital = estado.capital;
-            }
+    estadosBrasil.estadosCidades.estados.forEach(function (estado) {
+        if (estado.sigla == siglaEstado) {
+            listaCapitalJSON = {};
 
-        })
-    }
+            listaCapitalJSON.uf = estado.sigla;
+            listaCapitalJSON.descricao = estado.nome;
+            listaCapitalJSON.capital = estado.capital;
+        }
+
+    })
+
 
     return listaCapitalJSON;
 
@@ -80,38 +76,46 @@ const getCapitalEstado = function (siglaDoEstado) {
 
 const getEstadosRegiao = function (regiaoDoBrasil) {
 
-    let primeiraLetra = regiaoDoBrasil.charAt(0).toUpperCase();
-    let restoDaPalavra = regiaoDoBrasil.slice(1).toLowerCase();
-    let regiao = primeiraLetra + restoDaPalavra;
+    let regiao = regiaoDoBrasil
+
+    if (regiao.toUpperCase() == 'CENTRO-OESTE') {
+        let primeiraLetra = regiaoDoBrasil.charAt(0).toUpperCase();
+        let restoDaPalavra = regiaoDoBrasil.slice(1, 7).toLowerCase();
+        let segundaLetra = regiaoDoBrasil.slice(7, 8).toUpperCase();
+        let outroRestoDaPalavra = regiaoDoBrasil.slice(8).toLowerCase();
+
+        regiao = primeiraLetra + restoDaPalavra + segundaLetra + outroRestoDaPalavra
+    } else {
+        let primeiraLetra = regiaoDoBrasil.charAt(0).toUpperCase();
+        let restoDaPalavra = regiaoDoBrasil.slice(1).toLowerCase();
+        regiao = primeiraLetra + restoDaPalavra;
+    }
+
     let listaRegiaoJSON;
     let listaEstadosArray = []
 
-    if (regiao === '') {
-        listaRegiaoJSON = false;
-    } else if (!isNaN(regiao)) {
-        listaRegiaoJSON = false;
-    } else {
-        estadosBrasil.estadosCidades.estados.forEach(function (estado) {
-            if (estado.regiao == regiao) {
-                let estadoRecolhido = {}
 
-                estadoRecolhido.uf = estado.sigla
-                estadoRecolhido.descricao = estado.nome
-                listaEstadosArray.push(estadoRecolhido)
+    estadosBrasil.estadosCidades.estados.forEach(function (estado) {
+        if (estado.regiao == regiao) {
+            let estadoRecolhido = {}
 
-            }
-        })
+            estadoRecolhido.uf = estado.sigla
+            estadoRecolhido.descricao = estado.nome
+            listaEstadosArray.push(estadoRecolhido)
 
-        if (listaEstadosArray.length != 0) {
-            listaRegiaoJSON = {}
-
-            listaRegiaoJSON.regiao = regiao;
-            listaRegiaoJSON.estados = listaEstadosArray;
-        } else {
-            listaRegiaoJSON = false;
         }
+    })
 
+    if (listaEstadosArray.length != 0) {
+        listaRegiaoJSON = {}
+
+        listaRegiaoJSON.regiao = regiao;
+        listaRegiaoJSON.estados = listaEstadosArray;
+    } else {
+        listaRegiaoJSON = false;
     }
+
+
 
     return listaRegiaoJSON;
 
@@ -119,7 +123,7 @@ const getEstadosRegiao = function (regiaoDoBrasil) {
 
 const getCapitalPais = function () {
 
-    let listaCapitaisBrJSON;
+    let listaCapitaisBrJSON = false;
     let listaCapitaisArray = []
 
     estadosBrasil.estadosCidades.estados.forEach(function (estado) {
