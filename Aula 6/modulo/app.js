@@ -42,9 +42,8 @@ app.use((request, response, next) => {
 
 //EndPoints
 
-
 //EndPoint para listar todos os estados.
-app.get('/estados', cors(), async function (request, response, next) {
+app.get('/senai/estados', cors(), async function (request, response, next) {
 
     let statusCode;
     let dadosEstado = {};
@@ -64,7 +63,7 @@ app.get('/estados', cors(), async function (request, response, next) {
 })
 
 //Endpoint para listar os dados do estado filtrando pela sigla passada.
-app.get('/estado/:uf', cors(), async function (request, response, next) {
+app.get('/senai/estado/sigla/:uf', cors(), async function (request, response, next) {
 
     let statusCode;
     let dadosEstado = {};
@@ -90,7 +89,8 @@ app.get('/estado/:uf', cors(), async function (request, response, next) {
     response.json(dadosEstado)
 })
 
-app.get('/capital/:uf', cors(), async function (request, response, next) {
+//Endpoint para listar a capital e alguns dados do estado filtrando pela sigla passada.
+app.get('/senai/capital/estado/sigla/:uf', cors(), async function (request, response, next) {
 
     let statusCode;
     let dadosEstado = {};
@@ -116,7 +116,8 @@ app.get('/capital/:uf', cors(), async function (request, response, next) {
     response.json(dadosEstado)
 })
 
-app.get('/estados/:regiao', cors(), async function (request, response, next){
+//Endpoint para listar os estados da região passada.
+app.get('/senai/estados/regiao/:regiao', cors(), async function (request, response, next){
 
     let statusCode;
     let dadosEstado = {};
@@ -142,7 +143,8 @@ app.get('/estados/:regiao', cors(), async function (request, response, next){
     response.json(dadosEstado)
 })
 
-app.get('/capitais', cors(), async function (request, response, next) {
+//Endpoint para listar todas as capitais do Brasil até hoje.
+app.get('/senai/capitais', cors(), async function (request, response, next) {
     let statusCode;
     let dadosEstado = {};
 
@@ -160,11 +162,46 @@ app.get('/capitais', cors(), async function (request, response, next) {
     response.json(dadosEstado)
 })
 
-app.get('/cidades/:uf', cors(), async function (request, response, next) {
+//Endpoint para listar as cidades do estado da sigla passada.
+app.get('/v1/senai/cidades/estado/sigla/:uf', cors(), async function (request, response, next) {
     let statusCode;
     let dadosEstado = {};
     //Recebe a sigla do estado que enviada pela url da requisição.
     let siglaEstado = request.params.uf
+
+    if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
+        statusCode = 400
+        dadosEstado.message = 'Não foi possível processar pois os dados de entrada (uf) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, precisa ser Caracteres e ter ao 2 digítos.'
+    } else {
+        let cidades = estadosCidades.getCidades(siglaEstado)
+
+        //Tratamento para validar o sucesso da requisição
+        if (cidades) {
+            statusCode = 200
+            dadosEstado = cidades
+        } else {
+            statusCode = 404
+        }
+    }
+    //Retorna o código e o JSON
+    response.status(statusCode)
+    response.json(dadosEstado)
+})
+
+//Endpoint para listar as cidades do estado da sigla passada usando queryString.
+app.get('/v2/senai/cidades', cors(), async function (request, response, next) {
+    let statusCode;
+    let dadosEstado = {};
+    //Recebe a sigla do estado que enviada pela url da requisição.
+    /**
+     * Existem duas opoções para receber variáveis para filtro:
+     *      - params - que permite receber a variável na estrtura da URL
+     *          criada no endpoint (geralmente utilizada para ID (PK))
+     * 
+     *      - query (queryString) - que permite receber uma ou muitas variáveis para
+     *          realizar filtros avançado.
+     */
+    let siglaEstado = request.query.uf
 
     if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
         statusCode = 400

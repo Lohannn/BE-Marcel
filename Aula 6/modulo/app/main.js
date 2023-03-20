@@ -103,8 +103,6 @@ const getEstadosRegiao = function (regiaoDoBrasil) {
 
 }
 
-console.log(getEstadosRegiao('centro-Oeste'))
-
 const getCapitalPais = function () {
 
     let listaCapitaisBrJSON = false;
