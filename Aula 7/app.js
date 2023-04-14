@@ -31,30 +31,30 @@ app.use((request, response, next) => {
  *************************************************************************************/
 
     //Endpoint: Retorna todos os dados de alunos
-    app.get('/v1/lion-school/aluno', cors(), async, function (request, response){
+    app.get('/v1/lion-school/aluno', cors(), async function (request, response){
 
     })
 
     //Endpoint: Retorna o aluno filtrando pelo ID
-    app.get('/v1/lion-school/aluno/:id', cors(), async, function (request, response){
+    app.get('/v1/lion-school/aluno/:id', cors(), async function (request, response){
         
     })
 
     //Endpoint: Insere um dado novo
-    app.post('/v1/lion-school/aluno', cors(), async, function (request, response){
+    app.post('/v1/lion-school/aluno', cors(), async function (request, response){
         
     })
 
     //Endpoint: Atualiza um dado existente, filtrando pelo ID
-    app.put('/v1/lion-school/aluno/:id', cors(), async, function (request, response){
+    app.put('/v1/lion-school/aluno/:id', cors(), async function (request, response){
         
     })
 
     //Endpoint: Deleta um dado existente, filtrando pelo ID
-    app.delete('/v1/lion-school/aluno/:id', cors(), async, function (request, response){
+    app.delete('/v1/lion-school/aluno/:id', cors(), async function (request, response){
         
     })
 
 app.listen(8080, function(){
-    console.log('aguardadno requisições na porta 8080...');
+    console.log('Aguardadno requisições na porta 8080...');
 })
