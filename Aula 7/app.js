@@ -16,6 +16,9 @@
  * npx prisma migrate dev
  * 
 **************************************************************************************/
+//Import do arquivo da controller que irá solicitar a model os dados do BD.
+var controllerAluno = require('./controller/controller_aluno.js')
+
 const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -41,10 +44,11 @@ app.use((request, response, next) => {
  * Versão: 1.0
  *************************************************************************************/
 
+//Define que os dados que irão chegar no body da requisição será no padrão JSON.
+const bodyParserJSON = bodyParser.json()
+
 //Endpoint: Retorna todos os dados de alunos ou de um nome passado.
 app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
-    //Import do arquivo da controller que irá solicitar a model os dados do BD.
-    let controllerAluno = require('./controller/controller_aluno.js')
 
     //Recolhe o parâmetro do id passado pela URL
     let nomeAluno = request.query.nome
@@ -53,25 +57,27 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
         //Recebe os dados do controller
         let dadosAluno = await controllerAluno.getAlunoPeloNome(nomeAluno);
 
+        
         //Valida se existe registro
         if (dadosAluno) {
             response.json(dadosAluno)
             response.status(200)
         } else {
-            response.json()
             response.status(404)
+            response.json()
         }
     } else {
+        
         //Recebe os dados do controller
-        let dadosAluno = await controllerAluno.getAlunoPeloNome(nomeAluno);
+        let dadosAluno = await controllerAluno.getAlunos();
 
         //Valida se existe registro
         if (dadosAluno) {
             response.json(dadosAluno)
             response.status(200)
         } else {
-            response.json()
             response.status(404)
+            response.json()
         }
     }
 
@@ -79,33 +85,38 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
 
 //Endpoint: Retorna o aluno filtrando pelo ID
 app.get('/v1/lion-school/aluno/:id', cors(), async function (request, response) {
-    let controllerAluno = require('./controller/controller_aluno.js')
 
     //Recolhe o parâmetro do id passado pela URL
     let idAluno = request.params.id
 
         //Recebe os dados do controller
         let dadosAluno = await controllerAluno.getAlunoPeloID(idAluno);
-        console.log(dadosAluno);
 
         //Valida se existe registro
         if (dadosAluno) {
             response.json(dadosAluno)
             response.status(200)
         } else {
-            response.json()
             response.status(404)
+            response.json()
         }
 
 })
 
 //Endpoint: Insere um dado novo
-app.post('/v1/lion-school/aluno', cors(), async function (request, response) {
+app.post('/v1/lion-school/aluno', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe os dados encaminhados na requisição.
+    let dadosBody = request.body
 
+
+    let resultDadosAluno = await controllerAluno.inserirAluno(dadosBody)
+
+    response.status(resultDadosAluno.status)
+    response.json(resultDadosAluno)
 })
 
 //Endpoint: Atualiza um dado existente, filtrando pelo ID
-app.put('/v1/lion-school/aluno/:id', cors(), async function (request, response) {
+app.put('/v1/lion-school/aluno/:id', cors(), bodyParserJSON,async function (request, response) {
 
 })
 
@@ -115,5 +126,5 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function (request, respons
 })
 
 app.listen(8080, function () {
-    console.log('Aguardadno requisições na porta 8080...');
+    console.log('Aguardando requisições na porta 8080...');
 })

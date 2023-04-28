@@ -5,28 +5,51 @@
  * Versão: 1.0
  **************************************************************************************/
 
-//Insere um novo aluno no Banco de Dados.
-const insertAluno = async function (dadosAluno){
+//Import da biblioteca do prisma client
+var { PrismaClient } = require('@prisma/client');
 
+//Instância da classe PrismaClient
+var prisma = new PrismaClient()
+
+//Insere um novo aluno no Banco de Dados.
+const insertAluno = async function (dadosAluno) {
+    //ScriptSQL para inserir dados.
+    let sql = `insert into tbl_aluno (
+        nome,
+        rg,
+        cpf,
+        data_nascimento,
+        email
+    ) values (
+        '${dadosAluno.nome}',
+        '${dadosAluno.rg}',
+        '${dadosAluno.cpf}',
+        '${dadosAluno.data_nascimento}',
+        '${dadosAluno.email}'
+    )`
+
+    //Executa o sript no BD.
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    } else{
+        return false
+    }
 }
 
 //Atualiza um aluno no Banco de Dados.
-const updateAluno = async function (dadosAluno){
+const updateAluno = async function (dadosAluno) {
 
 }
 
 //Deleta um aluno no Banco de Dados.
-const deleteAluno = async function (IdAluno){
+const deleteAluno = async function (IdAluno) {
 
 }
 
 //Retorna todos os alunos.
-const selectAllAlunos = async function (){
-    //Import da biblioteca do prisma client
-    let { PrismaClient } = require('@prisma/client');
-
-    //Instância da classe PrismaClient
-    let prisma = new PrismaClient()
+const selectAllAlunos = async function () {
 
     //scriptSQL para buscar todos os itens do BD
     let sql = 'SELECT * FROM tbl_aluno'
@@ -36,7 +59,7 @@ const selectAllAlunos = async function (){
     let rsAluno = await prisma.$queryRawUnsafe(sql)
 
     //Valida se o BD retornou algum registro
-    if(rsAluno.length > 0){
+    if (rsAluno.length > 0) {
         return rsAluno
     } else {
         return false
@@ -45,12 +68,8 @@ const selectAllAlunos = async function (){
 }
 
 //Retorna um aluno pelo ID.
-const selectByIdAluno = async function (IdAluno){
-    //Import da biblioteca do prisma client
-    let { PrismaClient } = require('@prisma/client');
+const selectByIdAluno = async function (IdAluno) {
 
-    //Instância da classe PrismaClient
-    let prisma = new PrismaClient()
 
     //scriptSQL para buscar todos os itens do BD
     let sql = `select * from tbl_aluno where id = ${IdAluno}`
@@ -60,7 +79,7 @@ const selectByIdAluno = async function (IdAluno){
     let rsAluno = await prisma.$queryRawUnsafe(sql)
 
     //Valida se o BD retornou algum registro
-    if(rsAluno.length > 0){
+    if (rsAluno.length > 0) {
         return rsAluno
     } else {
         return false
@@ -68,12 +87,7 @@ const selectByIdAluno = async function (IdAluno){
 }
 
 //Retorna um aluno pelo Nome.
-const selectByNameAluno = async function (NameAluno){
-    //Import da biblioteca do prisma client
-    let { PrismaClient } = require('@prisma/client');
-
-    //Instância da classe PrismaClient
-    let prisma = new PrismaClient()
+const selectByNameAluno = async function (NameAluno) {
 
     //scriptSQL para buscar todos os itens do BD
     let sql = `select * from tbl_aluno where nome like '%${NameAluno}%'`
@@ -83,7 +97,7 @@ const selectByNameAluno = async function (NameAluno){
     let rsAluno = await prisma.$queryRawUnsafe(sql)
 
     //Valida se o BD retornou algum registro
-    if(rsAluno.length > 0){
+    if (rsAluno.length > 0) {
         return rsAluno
     } else {
         return false
@@ -93,5 +107,6 @@ const selectByNameAluno = async function (NameAluno){
 module.exports = {
     selectAllAlunos,
     selectByIdAluno,
-    selectByNameAluno
+    selectByNameAluno,
+    insertAluno
 }
