@@ -18,6 +18,7 @@
 **************************************************************************************/
 //Import do arquivo da controller que irá solicitar a model os dados do BD.
 var controllerAluno = require('./controller/controller_aluno.js')
+var messages = require('./controller/modulo/config.js');
 
 const express = require('express');
 const cors = require('cors')
@@ -57,7 +58,7 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
         //Recebe os dados do controller
         let dadosAluno = await controllerAluno.getAlunoPeloNome(nomeAluno);
 
-        
+
         //Valida se existe registro
         if (dadosAluno) {
             response.json(dadosAluno)
@@ -67,7 +68,7 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
             response.json()
         }
     } else {
-        
+
         //Recebe os dados do controller
         let dadosAluno = await controllerAluno.getAlunos();
 
@@ -89,39 +90,81 @@ app.get('/v1/lion-school/aluno/:id', cors(), async function (request, response) 
     //Recolhe o parâmetro do id passado pela URL
     let idAluno = request.params.id
 
-        //Recebe os dados do controller
-        let dadosAluno = await controllerAluno.getAlunoPeloID(idAluno);
+    //Recebe os dados do controller
+    let dadosAluno = await controllerAluno.getAlunoPeloID(idAluno);
 
-        //Valida se existe registro
-        if (dadosAluno) {
-            response.json(dadosAluno)
-            response.status(200)
-        } else {
-            response.status(404)
-            response.json()
-        }
+    //Valida se existe registro
+    if (dadosAluno) {
+        response.json(dadosAluno)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json()
+    }
 
 })
 
 //Endpoint: Insere um dado novo
 app.post('/v1/lion-school/aluno', cors(), bodyParserJSON, async function (request, response) {
-    //Recebe os dados encaminhados na requisição.
-    let dadosBody = request.body
+
+    let contentType = request.headers['content-type'];
+
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição.
+        let dadosBody = request.body
 
 
-    let resultDadosAluno = await controllerAluno.inserirAluno(dadosBody)
+        let resultDadosAluno = await controllerAluno.inserirAluno(dadosBody)
 
-    response.status(resultDadosAluno.status)
-    response.json(resultDadosAluno)
+        response.status(resultDadosAluno.status)
+        response.json(resultDadosAluno)
+    } else {
+        response.status(messages.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json('')
+    }
 })
 
 //Endpoint: Atualiza um dado existente, filtrando pelo ID
-app.put('/v1/lion-school/aluno/:id', cors(), bodyParserJSON,async function (request, response) {
+app.put('/v1/lion-school/aluno/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    let contentType = request.headers['content-type'];
+
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe o Id do Aluno pelo parametro.
+        let idAluno = request.params.id;
+        //Recebe os dados do Aluno encaminhado no corpo da requisição.
+        let dadosBody = request.body
+
+        let resultDadosAluno = await controllerAluno.atualizarAluno(dadosBody, idAluno)
+
+        response.status(resultDadosAluno.status)
+        response.json(resultDadosAluno)
+    } else {
+        response.status(messages.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json('')
+    }
 
 })
 
 //Endpoint: Deleta um dado existente, filtrando pelo ID
 app.delete('/v1/lion-school/aluno/:id', cors(), async function (request, response) {
+    let contentType = request.headers['content-type'];
+
+    //Recebe o Id do Aluno pelo parametro.
+    let idAluno = request.params.id;
+
+    let validateAluno = await controllerAluno.getAlunoPeloID(idAluno)
+    console.log(validateAluno.status);
+
+    if (validateAluno.status != 404) {
+        let resultDadosAluno = await controllerAluno.deletarAluno(idAluno)
+        response.status(resultDadosAluno.status)
+        response.json(resultDadosAluno)
+    } else {
+        response.status(validateAluno.status)
+        response.json(validateAluno)
+    }
+
 
 })
 
